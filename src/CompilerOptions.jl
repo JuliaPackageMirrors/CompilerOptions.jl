@@ -1,6 +1,6 @@
 module CompilerOptions
 
-export compile_enabled, code_coverage, check_bounds
+export compile_enabled, code_coverage, check_bounds, dump_bitcode
 
 # C option forms
 
@@ -66,6 +66,10 @@ end
 
 function check_bounds()
     return jl_opts.check_bounds == 1
+end
+
+function dump_bitcode()
+    return jl_opts.dumpbitcode == 1
 end
 
 end # module
