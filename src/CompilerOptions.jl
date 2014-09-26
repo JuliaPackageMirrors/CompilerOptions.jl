@@ -3,6 +3,7 @@ module CompilerOptions
 export compile_enabled, code_coverage, check_bounds, dump_bitcode
 
 # C option forms
+# found in https://github.com/JuliaLang/julia/blob/master/src/julia.h
 
 # 0.3
 if VERSION < v"0.4-"
