@@ -3,25 +3,39 @@
 [![Build Status](https://travis-ci.org/sjkelly/CompilerOptions.jl.svg?branch=master)](https://travis-ci.org/sjkelly/CompilerOptions.jl)
 [![Coverage Status](https://img.shields.io/coveralls/sjkelly/CompilerOptions.jl.svg)](https://coveralls.io/r/sjkelly/CompilerOptions.jl?branch=master)
 
-This is a basic package for providing introsepction into Julia's compiler options.
+This is a basic package for providing introsepction into Julia's compiler
+options. This functionality is now part of Base in 0.4, so this package aims
+provide a consistent API between 0.3 and 0.4.
 
 ## Use
-#### ```code_coverage()``` → ::Bool
-Returns `true` if Julia is counting exections of source lines.
-Corresponds to the `--code-coverage={none|user|all}` or `--code-coverage` flag.
 
-#### ```check_bounds()``` → ::Bool
-Returns `true` if julia is emitting bounds checks.
-Corresponds to the `--check-bounds={yes|no}` flag.
+### Julia 0.3
 
-#### ```dump_bitcode()``` → ::Bool
-Returns `true` if Julia is dumping bitcode. Corresponds to the ` --dump-bitcode={yes|no} ` flag.
+CompilerOptions defines the following for Julia 0.3:
 
-### Additonal functions for v0.4
+```
+    immutable JLCompilerOpts
+        build_path::Ptr{Cchar}
+        code_coverage::Int8
+        malloc_log::Int8
+        check_bounds::Int8
+        dumpbitcode::Int8
+        int_literals::Cint
+    end
 
-#### ```compile_enabled()``` → ::Bool
-Returns `true` if Julia was run with compilation enabled. Corresponds to the `--compile={yes|no|all} ` flag.
+    compileropts() = unsafe_load(cglobal(:jl_compileropts, JLCompilerOpts))
+```
 
+It is now possible to see if Julia is being run with code-coverage enabled:
+
+``` compileropts().code_coverage```
+
+### Julia O.4
+
+Julia 0.4 provides the same type, but is unexported. This package simply
+provides an alias for the function in Base:
+
+``` compileropts() = Base.compileropts() ```
 
 ## Credit
 This package was kick started with the help of ihnorton, jakebolewski, and staticfloat.
