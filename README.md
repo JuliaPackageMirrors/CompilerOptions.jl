@@ -31,7 +31,7 @@ enabled:
 
 `compileropts().code_coverage`
 
-### Julia O.4
+### Julia 0.4
 
 Julia 0.4 provides the same type, but is unexported. This package simply
 provides an alias for the function in Base:
