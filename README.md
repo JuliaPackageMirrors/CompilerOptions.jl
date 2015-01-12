@@ -26,16 +26,17 @@ CompilerOptions defines the following for Julia 0.3:
     compileropts() = unsafe_load(cglobal(:jl_compileropts, JLCompilerOpts))
 ```
 
-It is now possible to see if Julia is being run with code-coverage enabled:
+For example, it is now possible to see if Julia is being run with code-coverage
+enabled:
 
-``` compileropts().code_coverage```
+`compileropts().code_coverage`
 
 ### Julia O.4
 
 Julia 0.4 provides the same type, but is unexported. This package simply
 provides an alias for the function in Base:
 
-``` compileropts() = Base.compileropts() ```
+`compileropts() = Base.compileropts()`
 
 ## Credit
 This package was kick started with the help of ihnorton, jakebolewski, and staticfloat.
