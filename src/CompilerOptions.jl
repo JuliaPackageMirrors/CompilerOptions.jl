@@ -1,6 +1,6 @@
 module CompilerOptions
 
-export compileropts
+export JLOptions
 
 # C option forms
 # found in https://github.com/JuliaLang/julia/blob/master/src/julia.h
@@ -14,21 +14,21 @@ if VERSION < v"0.4-"
     #int8_t check_bounds;
     #int int_literals;
     #} jl_compileropts_t;
-    immutable JLCompilerOpts
+    immutable JLOptions
         build_path::Ptr{Cchar}
+        cpu_target::Ptr{Cchar}
         code_coverage::Int8
         malloc_log::Int8
         check_bounds::Int8
-        dumpbitcode::Int8
         int_literals::Cint
     end
 
-    compileropts() = unsafe_load(cglobal(:jl_compileropts, JLCompilerOpts))
+    JLOptions() = unsafe_load(cglobal(:jl_compileropts, JLOptions))
 
 # 0.4, subject to change, catostrophic breakage, and such.
 else
-
-    compileropts() = Base.compileropts()
+# https://github.com/JuliaLang/julia/blob/master/base/options.jl
+    JLOptions() = Base.JLOptions()
 
 end
 

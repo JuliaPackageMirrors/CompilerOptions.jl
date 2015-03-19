@@ -14,29 +14,29 @@ provide a consistent API between 0.3 and 0.4.
 CompilerOptions defines the following for Julia 0.3:
 
 ```
-    immutable JLCompilerOpts
+    immutable JLOptions
         build_path::Ptr{Cchar}
+        cpu_target::Ptr{Cchar}
         code_coverage::Int8
         malloc_log::Int8
         check_bounds::Int8
-        dumpbitcode::Int8
         int_literals::Cint
     end
 
-    compileropts() = unsafe_load(cglobal(:jl_compileropts, JLCompilerOpts))
+    JLOptions() = unsafe_load(cglobal(:jl_compileropts, JLOptions))
 ```
 
 For example, it is now possible to see if Julia is being run with code-coverage
 enabled:
 
-`compileropts().code_coverage`
+`JLOptions().code_coverage`
 
 ### Julia 0.4
 
 Julia 0.4 provides the same type, but is unexported. This package simply
 provides an alias for the function in Base:
 
-`compileropts() = Base.compileropts()`
+`JLOptions() = Base.JLOptions()`
 
 ## Credit
 This package was kick started with the help of ihnorton, jakebolewski, and staticfloat.
